@@ -3,7 +3,9 @@ datamodel: datamodel.prisma
 generate:
   - generator: typescript-client
     output: ./generated/prisma-client/
-# ensure client being updated after every deploy
 hooks:
   post-deploy:
+    # ensure client being updated after every deployment
     - prisma generate
+    # generate CRUD building blocks after every deployment
+    - npx nexus-prisma-generate --client ./generated/prisma-client --output ./generated/nexus-prisma
